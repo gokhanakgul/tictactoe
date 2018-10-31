@@ -1,0 +1,10 @@
+{
+  "generator-java-bones": {
+    "user": "Gökhan Akgül",
+    "email": "gokhan.akgul@gmail.com",
+    "artifactID": "tictactoe",
+    "groupID": "com.metro",
+    "desc": "Tic Tac Toe Game",
+    "githubuser": "gokhanakgul"
+  }
+}
