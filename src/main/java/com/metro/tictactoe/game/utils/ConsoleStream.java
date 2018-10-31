@@ -57,7 +57,7 @@ public class ConsoleStream {
         System.out.print(print);
     }
 
-    public Integer[] inputCoordinate() {
+    public int[] inputCoordinate() {
         final String nextCoordinate = this.scanner.next();
 
         String[] coordinates = {};
@@ -67,10 +67,10 @@ public class ConsoleStream {
         if (coordinates.length == 2) {
 
             try{
-                final Integer col = Integer.valueOf(coordinates[0]) -1;
-                final Integer row = Integer.valueOf(coordinates[1]) -1;
+                int col = Integer.parseInt(coordinates[0]);
+                int row = Integer.parseInt(coordinates[1]);
 
-                return new Integer[] {col,row};
+                return new int[]{col-1, row-1};
             }catch (Exception ex){
                 LOGGER.error("Invalid Coordinate format",ex);
                 return null;

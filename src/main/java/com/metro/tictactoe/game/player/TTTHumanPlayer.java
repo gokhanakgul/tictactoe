@@ -95,7 +95,7 @@ public class TTTHumanPlayer extends TTTAbstractPlayer implements HumanPlayer<Mar
         while (!validInput) {
             print(format("Enter %s Coordinate: Range (0,0) (%s,%s) :", this, boardLength, boardLength));
 
-            Integer[] coorCandidate = inputCoordinate();
+            int[] coorCandidate = inputCoordinate();
             if(coorCandidate!=null)
                 candidate = new TTTCoordinate(coorCandidate[0],coorCandidate[1]);
 

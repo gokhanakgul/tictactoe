@@ -114,7 +114,7 @@ public class TTTScene implements Scene {
 
             } else {
 
-                LOGGER.error(String.format("PlayerType : %s ,playerMark : %s is not allowed "), playerType, playerMark);
+                LOGGER.error(String.format("PlayerType : %s ,playerMark : %s is not allowed ", playerType, playerMark));
             }
         }
 
@@ -159,7 +159,7 @@ public class TTTScene implements Scene {
 
                     case WIN:
                         LOGGER.debug(String.format(" Congratulations %s", pl.getName()));
-                        LOGGER.debug(String.format(" ~~~~  YOU WON THE GAME ! ~~~~", pl.getName()));
+                        LOGGER.debug(" ~~~~  YOU WON THE GAME ! ~~~~");
                         break;
 
                     case FINISHED:
