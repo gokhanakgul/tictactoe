@@ -73,5 +73,16 @@ public class PrintStreamRenderTest {
 
     }
 
+    @Test
+    public void simpleRenderABoard() {
+
+
+        PrintStreamRender render = new PrintStreamRender(System.out);
+        final String result = render.render(new TTTBoard(4));
+
+        Assert.assertNotNull(result);
+
+    }
+
 
 }

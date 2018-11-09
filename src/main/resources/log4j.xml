@@ -32,7 +32,7 @@
     </appender>
 
     <root>
-        <level value="DEBUG" />
+        <level value="error" />
         <appender-ref ref="console" />
     </root>
 

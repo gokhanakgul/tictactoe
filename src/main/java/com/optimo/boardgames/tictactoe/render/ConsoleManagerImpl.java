@@ -19,45 +19,38 @@
  * along with tictactoe. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.metro.tictactoe.game.utils;
+package com.optimo.boardgames.tictactoe.render;
 
-import com.metro.game.Coordinate;
-import com.metro.tictactoe.game.TTTCoordinate;
+import com.optimo.boardgames.Coordinate;
+import com.optimo.boardgames.tictactoe.board.CoordinateImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 
 /**
- * Created by mga on 10/29/18.
+ * Created by mga on 11/8/18.
  */
 
-public class ConsoleStream {
+public class ConsoleManagerImpl implements ConsoleManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleStream.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleManagerImpl.class);
+    private final PrintStream printStream;
     private final Scanner scanner;
 
-    public ConsoleStream(InputStream inputStream) {
-        this.scanner = new Scanner(inputStream, "UTF-8");
+    public ConsoleManagerImpl(InputStream source, PrintStream printStream) {
+        this.scanner = new Scanner(source, "UTF-8");
+        this.printStream = printStream;
     }
 
-    public ConsoleStream() {
-        this.scanner = new Scanner(System.in, "UTF-8");
-    }
+    @Override
+    public Coordinate getCoordinate(String message) {
+        println(message);
 
-    public void println(String print) {
-        System.out.println(print);
-    }
-
-    public void print(String print) {
-        System.out.print(print);
-    }
-
-    public int[] inputCoordinate() {
         final String nextCoordinate = this.scanner.next();
 
         String[] coordinates = {};
@@ -66,21 +59,30 @@ public class ConsoleStream {
 
         if (coordinates.length == 2) {
 
-            try{
+            try {
+
                 int col = Integer.parseInt(coordinates[0]);
                 int row = Integer.parseInt(coordinates[1]);
 
-                return new int[]{col-1, row-1};
-            }catch (Exception ex){
-                LOGGER.error("Invalid Coordinate format",ex);
+                return new CoordinateImpl(col - 1, row - 1);
+
+            } catch (Exception ex) {
+                LOGGER.error("Invalid Coordinate format", ex);
                 return null;
             }
 
         }
+
         return null;
     }
 
-    public String format(String text, Object... args) {
-        return String.format(text, args);
+    @Override
+    public void println(String string) {
+        printStream.println(string);
+    }
+
+    @Override
+    public void print(String string) {
+        printStream.print(string);
     }
 }

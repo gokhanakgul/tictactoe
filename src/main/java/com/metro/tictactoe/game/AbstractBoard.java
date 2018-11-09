@@ -54,7 +54,7 @@ public abstract class AbstractBoard implements Board<Move<Mark>> {
         initAvailableCells();
     }
 
-    protected void initAvailableCells() {
+    private void initAvailableCells() {
 
         availableCells = new HashMap<>();
 

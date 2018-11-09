@@ -19,27 +19,26 @@
  * along with tictactoe. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.metro.tictactoe.game;
+package com.optimo.boardgames.tictactoe.board;
 
-import com.metro.game.Coordinate;
+import com.optimo.boardgames.Coordinate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-
 
 /**
- * Created by mga on 10/30/18.
+ * Created by mga on 11/8/18.
  */
-public class TTTCoordinate implements Coordinate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TTTCoordinate.class);
+public class CoordinateImpl implements Coordinate {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CoordinateImpl.class);
 
     private final int col;
     private final int row;
 
-    public TTTCoordinate(int col, int row) {
+    public CoordinateImpl(int col, int row) {
         this.col = col;
         this.row = row;
     }
@@ -55,33 +54,10 @@ public class TTTCoordinate implements Coordinate {
     }
 
     @Override
-    public boolean validate(int length) {
-        return isBoardRange(length,col) && isBoardRange(length,row);
-    }
-
-    private boolean isBoardRange(int boardLength, int candidate) {
-        return (candidate >= 0 && boardLength > candidate );
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TTTCoordinate that = (TTTCoordinate) o;
-        return col == that.col &&
-                row == that.row;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(col, row);
-    }
-
-    @Override
     public String toString() {
-        return "TTTCoordinate{" +
-                "col=" + col +
-                ", row=" + row +
+        return "Coordinate Of{" +
+                "col=" + (col + 1) +
+                ", row=" + (row + 1) +
                 '}';
     }
 }

@@ -60,7 +60,7 @@ public class TTTHumanPlayer extends TTTAbstractPlayer implements HumanPlayer<Mar
 
             final Coordinate coorCandidate = getCandidate(board.getSize());
 
-            Move<Mark> candidate = new TTTMove(coorCandidate, this);
+            Move<Mark> candidate = new TTTMove<Mark>(coorCandidate, this);
 
             result = board.set(candidate);
 
@@ -105,13 +105,6 @@ public class TTTHumanPlayer extends TTTAbstractPlayer implements HumanPlayer<Mar
 
         }
         return candidate;
-    }
-
-    private boolean isBoardRange(int boardLength, int candidate) {
-        if (candidate < 0)
-            return false;
-
-        return (boardLength >= candidate && candidate > 1) || (boardLength > candidate && candidate >= 1);
     }
 
     @Override

@@ -65,8 +65,8 @@ public class TTTMove<Mark> extends TTTCoordinate implements Move<Mark> {
     public String toString() {
         return "TTTMove{" +
                 "player=" + player +
-                ", col=" + col +
-                ", row=" + row +
+                ", col=" + getCol() +
+                ", row=" + getRow() +
                 '}';
     }
 

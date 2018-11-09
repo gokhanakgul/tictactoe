@@ -19,63 +19,45 @@
  * along with tictactoe. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.metro.tictactoe.game.utils;
+package com.optimo.boardgames.tictactoe.render;
 
-import com.metro.game.Board;
-import com.metro.game.Move;
-import com.metro.game.Render;
-import com.metro.tictactoe.game.player.Mark;
+import com.optimo.boardgames.Action;
+import com.optimo.boardgames.Board;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.PrintStream;
 
 /**
- * Created by mga on 10/30/18.
+ * Created by mga on 11/8/18.
  */
 
-public class PrintStreamRender implements Render<String, Board<Move<Mark>>> {
+public class BoardRenderImpl implements BoardRender {
 
-    public static final String FRAME_LEFT = "[";
-    public static final String FRAME_RIGHT = "]";
+    private static final Logger LOGGER = LoggerFactory.getLogger(BoardRenderImpl.class);
+
+    private static final String FRAME_LEFT = "[";
+    private static final String FRAME_RIGHT = "]";
     private static final String NEW_LINE = "\n";
     private static final String PIPE = "|";
     private static final String CORNER = "+";
     private static final String BORDER = "---";
     private static final String SPACE = " ";
-    private static final Logger LOGGER = LoggerFactory.getLogger(PrintStreamRender.class);
-    private final PrintStream out;
-
-    public PrintStreamRender(PrintStream out) {
-        this.out = out;
-    }
 
     @Override
-    public String render(Board<Move<Mark>> board) {
-        final String renderedBoard = printGridViewWithCoordinate(board);
+    public String render(Board board) {
 
-        out.println(renderedBoard);
-        return renderedBoard;
+        return printGridViewWithCoordinate(board);
+
     }
 
-
     /**
-     * +---+---+---+---+---+---+
-     * |   |   |   |   |   |   |
-     * +---+---+---+---+---+---+
-     * |   |   |   |   |   |   |
-     * +---+---+---+---+---+---+
-     * |   |   |   |   |   |   |
-     * +---+---+---+---+---+---+
-     * |   |   |   |   |   |   |
-     * +---+---+---+---+---+---+
-     * |   |   |   |   |   |   |
-     * +---+---+---+---+---+---+
-     * |   |   |   |   |   |   |
-     * +---+---+---+---+---+---+
+     * +---+---+---+---+---+---+ |   |   |   |   |   |   | +---+---+---+---+---+---+ |   |   |   | |
+     * |   | +---+---+---+---+---+---+ |   |   |   |   |   |   | +---+---+---+---+---+---+ |   | | |
+     * |   |   | +---+---+---+---+---+---+ |   |   |   |   |   |   | +---+---+---+---+---+---+ | | |
+     * |   |   |   | +---+---+---+---+---+---+
      */
-    private String printGridView(Board<Move<Mark>> board) {
+    private String printGridView(Board board) {
 
         StringBuilder toString = new StringBuilder();
         StringBuilder lineSeperator = new StringBuilder();
@@ -88,11 +70,11 @@ public class PrintStreamRender implements Render<String, Board<Move<Mark>>> {
             lineSeperator = new StringBuilder(CORNER);
 
             for (int col = 0; col < boardSize; col++) {
-                final Move<Mark> move = board.get(col, row);
+                Action action = board.get(col, row);
 
                 lineSeperator.append(BORDER).append(CORNER);
 
-                line.append(SPACE).append(move == null ? SPACE : move.getValue().getMark()).append(SPACE).append(PIPE);
+                line.append(SPACE).append(action == null ? SPACE : action.getStone().getSymbol()).append(SPACE).append(PIPE);
             }
 
             toString.append(lineSeperator).append(NEW_LINE).append(line).append(NEW_LINE);
@@ -104,23 +86,15 @@ public class PrintStreamRender implements Render<String, Board<Move<Mark>>> {
     }
 
     /**
-     * +---+---+---+---+---+---+---+
-     * |[0]|[1]|[2]|[3]|[4]|[5]|[6]|
-     * +---+---+---+---+---+---+---+
-     * |[1]|   |   |   |   |   |   |
-     * +---+---+---+---+---+---+---+
-     * |[2]|   |   |   |   |   |   |
-     * +---+---+---+---+---+---+---+
-     * |[3]|   |   |   |   |   |   |
-     * +---+---+---+---+---+---+---+
-     * |[4]|   |   |   |   |   |   |
-     * +---+---+---+---+---+---+---+
-     * |[5]|   |   |   |   |   |   |
-     * +---+---+---+---+---+---+---+
-     * |[6]|   |   |   |   |   |   |
-     * +---+---+---+---+---+---+---+
+     * +---+---+---+---+---+---+---+ |[0]|[1]|[2]|[3]|[4]|[5]|[6]| +---+---+---+---+---+---+---+
+     * |[1]|   |   |   |   |   |   | +---+---+---+---+---+---+---+ |[2]|   |   |   |   |   |   |
+     * +---+---+---+---+---+---+---+ |[3]|   |   |   |   |   |   | +---+---+---+---+---+---+---+
+     * |[4]|   |   |   |   |   |   | +---+---+---+---+---+---+---+ |[5]|   |   |   |   |   |   |
+     * +---+---+---+---+---+---+---+ |[6]|   |   |   |   |   |   | +---+---+---+---+---+---+---+
      */
-    private String printGridViewWithCoordinate(Board<Move<Mark>> board) {
+
+
+    private String printGridViewWithCoordinate(Board board) {
 
         StringBuilder toString = new StringBuilder();
         StringBuilder lineSeperator;
@@ -144,11 +118,11 @@ public class PrintStreamRender implements Render<String, Board<Move<Mark>>> {
 
             line.append(FRAME_LEFT).append(row + 1).append(FRAME_RIGHT).append(PIPE);
             for (int col = 0; col < boardSize; col++) {
-                final Move<Mark> move = board.get(col, row);
+                Action action = board.get(col, row);
 
                 lineSeperator.append(BORDER).append(CORNER);
 
-                line.append(SPACE).append(move == null ? SPACE : move.getValue().getMark()).append(SPACE).append(PIPE);
+                line.append(SPACE).append(action == null ? SPACE : action.getStone().getSymbol()).append(SPACE).append(PIPE);
             }
 
             toString.append(lineSeperator).append(NEW_LINE).append(line).append(NEW_LINE);
@@ -159,7 +133,5 @@ public class PrintStreamRender implements Render<String, Board<Move<Mark>>> {
         return toString.toString();
     }
 
-    private int prepareFrame(int value, int step) {
-        return value;
-    }
+
 }
